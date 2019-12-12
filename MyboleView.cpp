@@ -112,4 +112,7 @@ void CMyboleView::OnDialog()
 	CTestDlg dlg;
 	dlg.DoModal();
 
+	/*CTestDlg* pDlg = new CTestDlg;
+	pDlg->Create(IDD_DIALOG1, this);
+	pDlg->ShowWindow(SW_SHOW);*/
 }

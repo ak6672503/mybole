@@ -19,5 +19,13 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
+
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedBtnAdd();
+private:
+	CButton m_btn;
+	BOOL m_bIsCreated;
+public:
+	afx_msg void OnStnClickedNumber1();
 };

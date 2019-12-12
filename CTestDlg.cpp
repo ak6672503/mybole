@@ -40,6 +40,7 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDlg::OnBnClickedBtnAdd)
 	ON_STN_CLICKED(IDC_NUMBER1, &CTestDlg::OnStnClickedNumber1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTestDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -119,4 +120,42 @@ void CTestDlg::OnStnClickedNumber1()
 	}
 
 
+}
+
+
+void CTestDlg::OnBnClickedButton2()
+{
+	CString str;
+	if (GetDlgItemText(IDC_BUTTON2, str), str == "收缩《《")
+	{
+
+		SetDlgItemText(IDC_BUTTON2, L"扩展》》");
+
+	}
+	else {
+		SetDlgItemText(IDC_BUTTON2, L"收缩《《");
+	}
+
+	static CRect rectLarge;
+	static CRect rectSmall;
+
+	if (rectLarge.IsRectNull())
+	{
+		CRect rectSeparator;
+		GetWindowRect(&rectLarge);
+		GetDlgItem(IDC_SEPARATOR)->GetWindowRect(&rectSeparator);
+
+		rectSmall.left = rectLarge.left;
+		rectSmall.top = rectLarge.top;
+		rectSmall.right = rectLarge.right;
+		rectSmall.bottom = rectSeparator.bottom;
+
+
+	}if (str == "收缩《《") {
+		SetWindowPos(NULL, 0, 0, rectSmall.Width(), rectSmall.Height(), SWP_NOMOVE | SWP_NOZORDER);
+	}
+	else {
+		SetWindowPos(NULL, 0, 0, rectLarge.Width(), rectLarge.Height(), SWP_NOMOVE | SWP_NOZORDER);
+
+	}
 }

@@ -5,6 +5,7 @@
 #include "Mybole.h"
 #include "CTestDlg.h"
 #include "afxdialogex.h"
+#include "resource.h"
 
 
 // CTestDlg 对话框
@@ -13,6 +14,7 @@ IMPLEMENT_DYNAMIC(CTestDlg, CDialog)
 
 CTestDlg::CTestDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_DIALOG1, pParent)
+	
 {
 
 }
@@ -25,6 +27,13 @@ CTestDlg::~CTestDlg()
 void CTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	//  DDX_Text(pDX, IDC_EDIT1, m_num1);
+	//  DDV_MinMaxInt(pDX, m_num1, 0, 22);
+	
+	//  DDX_Text(pDX, IDC_EDIT3, m_num3);
+	DDX_Control(pDX, IDC_EDIT1, m_edit1);
+	DDX_Control(pDX, IDC_EDIT2, m_edit2);
+	DDX_Control(pDX, IDC_EDIT3, m_edit3);
 }
 
 
@@ -48,15 +57,52 @@ void CTestDlg::OnBnClickedBtnAdd()
 		m_btn.DestroyWindow();
 		m_bIsCreated = FALSE;
 	}*/
-
+	/*通过控件ID 获取到控件里边的文本，转为int计算 然后转为文本 输出
 	int num1, num2, num3;
 	TCHAR ch1[10], ch2[10], ch3[10];
+	GetDlgItem(IDC_EDIT1)->GetWindowText(ch1, 10);
+	GetDlgItem(IDC_EDIT2)->GetWindowText(ch2, 10);
+	num1 = _tstoi(ch1);
+	num2 = _tstoi(ch2);
+	num3 = num1 + num2;
+	_itot_s(num3, ch3, 10);
+	GetDlgItem(IDC_EDIT3)->SetWindowText(ch3);*/
 
-	GetDlgItem(IDC_NUMBER1)->GetWindowText(ch1, 10);
-	GetDlgItem(IDC_NUMBER2)->GetWindowText(ch1, 10);
+	/*通过函数直接用控件ID获取到文本，不用多一步了
+	int num1, num2, num3;
+	TCHAR ch1[10], ch2[10], ch3[10];
+	GetDlgItemText(IDC_EDIT1, ch1, 10);
+	GetDlgItemText(IDC_EDIT2, ch2, 10);
 
 	num1 = _tstoi(ch1);
+	num2 = _tstoi(ch2);
+	num3 = num1 + num2;
+	_itot_s(num3, ch3, 10);
+	SetDlgItemText(IDC_EDIT3, ch3);*/
 
+	/*这个方式更简单
+	int num1, num2, num3;
+	num1 = GetDlgItemInt(IDC_EDIT1);
+	num2 = GetDlgItemInt(IDC_EDIT2);
+	num3 = num1 + num2;
+	SetDlgItemInt(IDC_EDIT3, num3);*/
+
+	/*直接用类向导关联控件
+	UpdateData();
+	m_num3 = m_num1 + m_num2;
+	UpdateData(FALSE);*/
+
+	/*类向导添加控件的方式关联窗口*/
+	int num1, num2, num3;
+	TCHAR ch1[10], ch2[10], ch3[10];
+	m_edit1.GetWindowText(ch1, 10);
+	m_edit2.GetWindowText(ch2, 10);
+
+	num1 = _tstoi(ch1);
+	num2 = _tstoi(ch2);
+	num3 = num1 + num2;
+	_itot_s(num3, ch3, 10);
+	m_edit3.SetWindowText(ch3);
 
 }
 

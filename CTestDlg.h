@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "Resource.h"
 
 // CTestDlg 对话框
 
@@ -30,9 +30,7 @@ public:
 	afx_msg void OnStnClickedNumber1();
 	void OnBnClickedButton2();
 private:
-//	int m_num1;
-//	int m_num2;
-//	int m_num3;
+
 	CEdit m_edit1;
 	CEdit m_edit2;
 	CEdit m_edit3;

@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDlg::OnBnClickedBtnAdd)
 	ON_STN_CLICKED(IDC_NUMBER1, &CTestDlg::OnStnClickedNumber1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CTestDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDOK, &CTestDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -158,4 +159,49 @@ void CTestDlg::OnBnClickedButton2()
 		SetWindowPos(NULL, 0, 0, rectLarge.Width(), rectLarge.Height(), SWP_NOMOVE | SWP_NOZORDER);
 
 	}
+}
+
+
+void CTestDlg::OnBnClickedOk()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//GetDlgItem(IDC_EDIT1)->GetNextWindow()->SetFocus();
+	
+	//GetFocus()->GetNextWindow()->SetFocus();
+
+	GetNextDlgTabItem(GetFocus())->SetFocus();
+//	CDialog::OnOK();
+}
+
+WNDPROC prevProc;
+LRESULT CALLBACK NewEditProc(
+	HWND hwnd,
+	UINT uMsg,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	if (uMsg == WM_CHAR && wParam == 0x0d) {
+		//::SetFocus(GetNextWindow(hwnd, GW_HWNDNEXT));
+		//::SetFocus(GetWindow(hwnd, GW_HWNDNEXT));
+		//SetFocus(::GetNextDlgTabItem(::GetParent(hwnd), hwnd, FALSE));
+		
+		
+		return 1;
+
+	}
+	else {
+		return prevProc(hwnd, uMsg, wParam, lParam);
+	}
+}
+
+BOOL CTestDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+
+	//prevProc = (WNDPROC)SetWindowLong(GetDlgItem(IDC_EDIT1)->m_hWnd, GWL_WNDPROC, (LONG)NewEditProc);
+	prevProc = (WNDPROC)SetWindowLong(GetDlgItem(IDC_EDIT1)->m_hWnd, GWL_WNDPROC, (LONG)NewEditProc);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 异常: OCX 属性页应返回 FALSE
 }

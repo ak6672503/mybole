@@ -36,4 +36,6 @@ private:
 	CEdit m_edit3;
 public:
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
 };
